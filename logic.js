@@ -1,13 +1,13 @@
 const MaintenanceRequests = [];
 
 
-function MaintenanceRequest(Name,Apartment,Email,Number,Issue,status){
-    this.Name = Name;
+function MaintenanceRequest(FirstName,LastName,Apartment,Email,PhoneNumber,Issue){
+    this.FirstName = FirstName;
+    this.LastName = LastName;
     this.Apartment = Apartment;
     this.Email = Email;
-    this.Number = Number;
+    this.PhoneNumber = PhoneNumber;
     this.Issue = Issue;
-    this.status = status;
 }
 
 function addMaintenanceRequest(newRequest){
@@ -24,7 +24,10 @@ function addMaintenanceRequest(newRequest){
 //addMaintenanceRequest(m3);
 //addMaintenanceRequest(m4);
 
-
+function RemoveRequest(index){
+    MaintenanceRequests.splice(index,1);
+    showRequests();
+}
 function showRequests(){
     const RequestsContainer = document.getElementById("Requests-Container");
     RequestsContainer.innerHTML = '';
@@ -33,11 +36,12 @@ function showRequests(){
         RequestsContainer.style.display = "flex";
         RequestsContainer.style.flexWrap = "wrap";
         RequestCard.innerHTML = `
-        <p>Name:${MaintenanceRequest.Name}</p>
+        <p>FirstName:${MaintenanceRequest.FirstName}</p>
+        <p>LastName:${MaintenanceRequest.LastName}</p>
         <p>Apartment:${MaintenanceRequest.Apartment}</p>
         <p>Email:${MaintenanceRequest.Email}</p>
+        <p>Phone Number:${MaintenanceRequest.PhoneNumber}</p>
         <p>Issue:${MaintenanceRequest.Issue}</p>
-        <p>status:${MaintenanceRequest.status}</p>
         `;
         RequestCard.style.display = "flex";
         RequestCard.style.flexDirection = "column";
@@ -49,6 +53,14 @@ function showRequests(){
         RequestCard.style.fontFamily = "Poppins";
         RequestCard.style.background = "linear-gradient(#9418fd,#571094)";
         RequestCard.style.borderRadius = "40px";
+        const removeButton = document.createElement('button');
+        removeButton.innerText = 'Remove Request';
+        removeButton.addEventListener('click', () => {
+            RemoveRequest(index);
+        });
+        removeButton.style.color = "white";
+        removeButton.style.alignContent;
+        RequestCard.appendChild(removeButton);
 
         RequestsContainer.appendChild(RequestCard);
         });
@@ -56,14 +68,13 @@ function showRequests(){
 
 
 function CreateRequest(){
-    const Name = prompt("Enter Name:");
+    const FirstName = prompt("Enter FirstName:");
+    const LastName = prompt("Enter LastName");
     const Apartment = prompt("Enter Apartment:");
     const Email = prompt("Enter Email:");
     const Number = prompt("Enter Phone Number:");
     const Issue = prompt("Enter Issue:");
-    const status = prompt("Enter Status (open/closed):");
-
-    const newRequest = new MaintenanceRequest(Name, Apartment, Email, Number, Issue, status);
+    const newRequest = new MaintenanceRequest(FirstName,LastName, Apartment, Email, Number, Issue);
     addMaintenanceRequest(newRequest);
     showRequests();
 
